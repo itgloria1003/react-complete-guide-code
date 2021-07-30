@@ -1,11 +1,18 @@
-import { createSlice, configureStore } from '@reduxjs/toolkit';
+import { createStore} from 'redux';
+import {  createSlice, configureStore} from '@reduxjs/toolkit';
 
-const initialCounterState = { counter: 0, showCounter: true };
-
+//1) slice (initialState, reducers , actions)
+// counter state 
+const initialCounterState = {
+  counter: 0,
+  showCounter: true,
+  byamount: 12
+};
 const counterSlice = createSlice({
   name: 'counter',
   initialState: initialCounterState,
   reducers: {
+    // only used within redux toolkit since its immutable 
     increment(state) {
       state.counter++;
     },
@@ -13,14 +20,13 @@ const counterSlice = createSlice({
       state.counter--;
     },
     increase(state, action) {
-      state.counter = state.counter + action.payload;
+      state.counter = state.counter + action.payload.byamount;
     },
-    toggleCounter(state) {
+    toogle(state) {
       state.showCounter = !state.showCounter;
     }
   }
 });
-
 const initialAuthState = {
   isAuthenticated: false,
 };
@@ -38,11 +44,14 @@ const authSlice = createSlice({
   },
 });
 
+
 const store = configureStore({
-  reducer: { counter: counterSlice.reducer, auth: authSlice.reducer }
+  reducer: { counter: counterSlice.reducer, auth: authSlice.reducer },
 });
 
-export const counterActions = counterSlice.actions;
+
+
+export const counterActions = counterSlice.actions; 
 export const authActions = authSlice.actions;
 
 export default store;
